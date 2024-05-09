@@ -1,0 +1,121 @@
+{
+  "version": 3,
+  "targets": {
+    "net6.0": {
+      "Client/1.0.0": {
+        "type": "project",
+        "framework": "Unsupported,Version=v0.0",
+        "compile": {
+          "bin/placeholder/Client.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Client.dll": {}
+        }
+      },
+      "Modules/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/Modules.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Modules.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Client/1.0.0": {
+      "type": "project",
+      "path": "../Client/Client.csproj",
+      "msbuildProject": "../Client/Client.csproj"
+    },
+    "Modules/1.0.0": {
+      "type": "project",
+      "path": "../Modules/Modules.csproj",
+      "msbuildProject": "../Modules/Modules.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net6.0": [
+      "Client >= 1.0.0",
+      "Modules >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\ALI CHARARA\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\ALI CHARARA\\Downloads\\New folder (3)\\CF\\Server\\Server.csproj",
+      "projectName": "Server",
+      "projectPath": "C:\\Users\\ALI CHARARA\\Downloads\\New folder (3)\\CF\\Server\\Server.csproj",
+      "packagesPath": "C:\\Users\\ALI CHARARA\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ALI CHARARA\\Downloads\\New folder (3)\\CF\\Server\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\ALI CHARARA\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net6.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "projectReferences": {
+            "C:\\Users\\ALI CHARARA\\Downloads\\New folder (3)\\CF\\Client\\Client.csproj": {
+              "projectPath": "C:\\Users\\ALI CHARARA\\Downloads\\New folder (3)\\CF\\Client\\Client.csproj"
+            },
+            "C:\\Users\\ALI CHARARA\\Downloads\\New folder (3)\\CF\\Modules\\Modules.csproj": {
+              "projectPath": "C:\\Users\\ALI CHARARA\\Downloads\\New folder (3)\\CF\\Modules\\Modules.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net6.0": {
+        "targetAlias": "net6.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+      }
+    }
+  },
+  "logs": [
+    {
+      "code": "NU1201",
+      "level": "Error",
+      "message": "Project Client is not compatible with net6.0 (.NETCoreApp,Version=v6.0). Project Client supports: net6.0-windows7.0 (.NETCoreApp,Version=v6.0)",
+      "libraryId": "Client",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "dgSpecHash": "52ehM64B12/Na4bfjWo+paV9abjWX75Yk3VLSOeNglETz5O9SnNBdFwEz1TON4rXdcDTa4iRFU9ewnIclN8YyQ==",
+  "success": false,
+  "projectFilePath": "C:\\Users\\ALI CHARARA\\Downloads\\New folder (3)\\CF\\Server\\Server.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1201",
+      "level": "Error",
+      "message": "Project Client is not compatible with net6.0 (.NETCoreApp,Version=v6.0). Project Client supports: net6.0-windows7.0 (.NETCoreApp,Version=v6.0)",
+      "libraryId": "Client",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    }
+  ]
+}
