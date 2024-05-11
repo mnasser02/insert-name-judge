@@ -1,4 +1,4 @@
-﻿namespace chkekfroces.model
+﻿namespace Modules
 {
     internal class Testcase
     {
