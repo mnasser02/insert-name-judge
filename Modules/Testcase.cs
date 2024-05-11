@@ -1,6 +1,6 @@
 ﻿namespace Modules
 {
-    internal class Testcase
+    public class Testcase
     {
         // Properties
         public int Id { get; set; }

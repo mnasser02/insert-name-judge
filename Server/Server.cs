@@ -34,26 +34,20 @@ namespace Server {
             using (var conn = new NpgsqlConnection(_connectionString)) {
                 conn.Open();
 
-                string query = "SELECT description FROM problems WHERE id = @id";
+                string query = "SELECT * FROM problem WHERE id = @id";
                 using (var cmd = new NpgsqlCommand(query, conn)) {
-                    cmd.Parameters.AddWithValue("@id", problemId);
-                    string description = cmd.ExecuteScalar().ToString();
-
-                    string testQuery = "SELECT input, expected_output FROM testcases WHERE problem_id = @id";
-                    List<Testcase> testcases = new List<Testcase>();
-
-                    using (var testCmd = new NpgsqlCommand(testQuery, conn)) {
-                        testCmd.Parameters.AddWithValue("@id", problemId);
-                        using (var reader = testCmd.ExecuteReader()) {
-                            while (reader.Read()) {
-                                string input = reader["input"].ToString();
-                                string expectedOutput = reader["expected_output"].ToString();
-                                testcases.Add(new Testcase(input, expectedOutput));
-                            }
-                        }
+                    cmd.Parameters.AddWithValue("id", problemId);
+                    using (var reader = cmd.ExecuteReader()) {
+                        reader.Read();
+                        // problem table: id , name, statement, input_format, output_format, notes, rating
+                        int id = reader.GetInt32(0);
+                        string name = reader.GetString(1);
+                        string statement = reader.GetString(2);
+                        string input = reader.GetString(3);
+                        string output = reader.GetString(4);
+                        int rating = reader.GetInt32(6);
+                        return new Problem(id, name, statement, rating, input, output);
                     }
-
-                    return new Problem(problemId, description, testcases);
                 }
             }
         }
@@ -76,7 +70,7 @@ namespace Server {
             //    Task.Run(() => HandleClient(client));
             //}
         }
-
+        /*
         private void HandleClient(TcpClient client) {
             NetworkStream stream = client.GetStream();
             StreamReader reader = new(stream);
@@ -112,6 +106,6 @@ namespace Server {
             finally {
                 client.Close();
             }
-        }
+        }*/
     }
 }

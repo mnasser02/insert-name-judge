@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Modules
 {
-    class Problem
+    public class Problem
     {
         public int Id { get; }
         public string Name { get; }
         public string Statement { get; }
-        private int Rating { get; }
+        public int Rating { get; }
         public string InputFormat { get; }
         public string OutputFormat { get; }
 

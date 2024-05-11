@@ -21,6 +21,14 @@ namespace Server {
 
             const int PORT = 11000;
             server.StartServer(PORT);
+
+            Problem problem = server.GetProblem(1);
+            Console.WriteLine(problem.Name);
+            Console.WriteLine(problem.Statement);
+            Console.WriteLine(problem.InputFormat);
+            Console.WriteLine(problem.OutputFormat);
+            Console.WriteLine(problem.Rating);
+            Console.WriteLine();
         }
     }
 }
