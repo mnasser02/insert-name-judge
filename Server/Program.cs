@@ -29,6 +29,13 @@ namespace Server {
             Console.WriteLine(problem.OutputFormat);
             Console.WriteLine(problem.Rating);
             Console.WriteLine();
+
+            List<(int, string)> problems = server.GetProblemsIdsNames();
+            foreach (var (id, name) in problems) {
+                Console.WriteLine($"{id} {name}");
+            }
+            Console.WriteLine();
+
         }
     }
 }

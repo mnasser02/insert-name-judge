@@ -16,7 +16,7 @@ namespace Server {
             using (var conn = new NpgsqlConnection(_connectionString)) {
                 conn.Open();
 
-                string query = "SELECT id, name FROM problems";
+                string query = "SELECT id, name FROM problem";
                 using (var cmd = new NpgsqlCommand(query, conn)) {
                     using (var reader = cmd.ExecuteReader()) {
                         List<(int, string)> problems = new();
