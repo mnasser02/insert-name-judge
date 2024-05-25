@@ -8,3 +8,5 @@
 `dotnet add Server package Microsoft.Extensions.Configuration.EnvironmentVariables`
 
 `dotnet add Server package Microsoft.Extensions.Configuration.Binder`
+
+`dotnet add Modules package Newtonsoft.Json`
