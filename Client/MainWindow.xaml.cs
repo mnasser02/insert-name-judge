@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,33 +24,34 @@ namespace Client
         {
         //  private ProblemController problemController;
         // private TestCaseController testCaseController;
-        private List<(int, string)> problemList = new List<(int, string)>
-        {
-            (1, "Problem 1"),
-            (2, "Problem 2"),
-            (3, "Problem 3")
-        };
+      static  IPHostEntry ipHostEntry = Dns.GetHostEntry("localhost");
+           static IPAddress serverIp = ipHostEntry.AddressList[0];
+
+          static  client client = new(serverIp);
         public MainWindow()
         {
             //Adding problem names to the list
             InitializeComponent();
-            List<(int, string)> ProblemList = client.RequestProblems(30);
-            foreach (var problem in problemList)
-            {
-                ProblemListBox.Items.Add($"{problem.Item1}: {problem.Item2}");
-            }
+          
             Language.Items.Add("JAVA 21");
-
             Language.Items.Add("Python");
             Language.Items.Add("C++ 17");
+          
+          
+
+            client.Connect();
+            List<(int, string)> problems = client.GetProblemsIdsNames();
+            foreach (var (id, name) in problems)
+            {
+               ProblemListBox.Items.Add( ($"{id} {name}"));
+            }
+
+          
 
         }
          
 
-        private void codeTextBox_TextChanged()
-        {
-
-        }
+    
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -71,6 +73,7 @@ namespace Client
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            client.Connect();
             var selectedItem = ProblemListBox.SelectedItem.ToString();
             int id = int.Parse(selectedItem.Substring(0, 1));
             Solution gg = new Solution(id, Language.SelectedItem.ToString(), Code.Text);
@@ -80,14 +83,14 @@ namespace Client
 
         private void ProblemListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
-
+            client.Connect();
             ListBox listBox = sender as ListBox;
             if (listBox != null && listBox.SelectedItem != null)
             {
                 // Get the selected item
                 var selectedItem = ProblemListBox.SelectedItem.ToString();
-                int id = int.Parse(selectedItem.Substring(0, 1));
-                 Problem problem=client.RequestProblem(id); 
+                int id = int.Parse(selectedItem.Split(' ')[0]);
+                 Problem problem=client.GetProblem(id); 
                 ProblemListBox.Visibility = Visibility.Collapsed;
 
                 ProblemName.Text = problem.Id + ". " + problem.Name;
@@ -103,10 +106,7 @@ namespace Client
             }
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-
-        }
+      
     }
     }
 
