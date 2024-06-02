@@ -158,14 +158,16 @@ namespace Server {
                 stringBuilder.Append(lastRecieved);
             }
             string jsonString = stringBuilder.ToString();
-            Console.WriteLine(jsonString);
+            Console.WriteLine($"Request: {jsonString}");
             return new Request(jsonString);
         }
         public void SendResponse(Socket socket, Response response) {
             if (socket is null) {
                 throw new InvalidOperationException("Client is not connected to the server.");
             }
-
+  
+            Console.WriteLine($"Response: {response.ToJsonString()}");
+            Console.WriteLine();
             // Serialize the object to JSON and convert to bytes
             byte[] data = Encoding.UTF8.GetBytes(response.ToJsonString());
             int totalBytesSent = 0;
