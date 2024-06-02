@@ -16,20 +16,20 @@ namespace Modules
         public string OutputFormat { get; }
 
         public Problem(
-            int index,
+            int id,
             string name,
             string statement,
             int rating,
-            string input,
-            string output
+            string inputFormat,
+            string outputFormat
         )
         {
-            Id = index;
+            Id = id;
             Name = name;
             Statement = statement;
             Rating = rating;
-            InputFormat = input;
-            OutputFormat = output;
+            InputFormat = inputFormat;
+            OutputFormat = outputFormat;
         }
     }
 }
