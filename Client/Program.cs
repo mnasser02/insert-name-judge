@@ -4,15 +4,17 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Modules;
+using System.Threading.Tasks;
 
 namespace Client {
     internal class Program {
-        static void Main(string[] args) {
+        static async Task Main(string[] args) {
 
             IPHostEntry ipHostEntry = Dns.GetHostEntry("localhost");
             IPAddress serverIp = ipHostEntry.AddressList[0];
 
             ClientApp client = new(serverIp);
+
 
             Problem problem = client.GetProblem(1);
             Console.WriteLine("Problem id: " + problem.Id);
@@ -23,6 +25,8 @@ namespace Client {
             Console.WriteLine("Problem Rating: " + problem.Rating);
             Console.WriteLine();
             Console.WriteLine("---------------------------------------------------");
+
+
 
             List<(int, string)> problems = client.GetProblemsIdsNames();
             foreach (var (id, name) in problems) {

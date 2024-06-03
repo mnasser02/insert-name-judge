@@ -28,24 +28,28 @@ namespace Server {
             socket.Bind(ipEndPoint);
 
             // specify how many requests a Socket can listen before it gives Server busy response
-            socket.Listen(10);
+            socket.Listen(100);
 
             Console.WriteLine($"Server listening on {ipEndPoint}");
 
-            //System.Diagnostics.Debugger.Launch();
             while (true) {
                 // accept incoming connection requests
                 Socket handler = socket.Accept();
-                Console.WriteLine($"Server connected to {handler.RemoteEndPoint}");
+                Console.WriteLine($"Server connected to client {handler.RemoteEndPoint}");
 
-                HandleClient(handler);
-
-                handler.Shutdown(SocketShutdown.Both);
-                handler.Close();
+                Thread clientThread = new(new ParameterizedThreadStart(HandleClient));
+                Console.WriteLine("working on thread: " + clientThread.ManagedThreadId);
+                clientThread.Start(handler);
             }
 
         }
-        public void HandleClient(Socket handler) {
+        public void HandleClient(object? obj) {
+            if (obj == null) {
+                throw new InvalidOperationException("Client is not connected to the server.");
+            }
+
+            Socket handler = (Socket)obj;
+
             // receive request
             Request request = ReceiveRequest(handler);
             Console.WriteLine($"Request Type: {request.Type}, Body: {request.Body}, Body type: {request.Body!.GetType()}");
@@ -63,15 +67,19 @@ namespace Server {
                     break;
                 case "SUBMIT_SOLUTION":
                     Solution solution = (Solution)request.Body!;
-                    string verdict = SubmitSolution(solution);
+                    string verdict = SubmitSolution(solution).Result;
                     response = new Response(verdict, typeof(string));
                     break;
                 default:
                     throw new InvalidOperationException("Invalid request type.");
 
             }
+            //Task.Delay(10000).Wait(); // to test multi-threading
             SendResponse(handler, response);
             Console.WriteLine();
+
+            handler.Shutdown(SocketShutdown.Both);
+            handler.Close();
         }
 
         public List<(int, string)> GetProblemsIdsNames() {
@@ -114,11 +122,11 @@ namespace Server {
             }
         }
 
-        public string SubmitSolution(Solution solution) {
+        public async Task<string> SubmitSolution(Solution solution) {
             Console.WriteLine(solution.Code);
             Problem problem = GetProblem(solution.ProblemId);
             List<Testcase> testcases = GetTestcases(problem.Id);
-            string verdict = Judge.CheckSolution(solution, testcases).Result;
+            string verdict = await Judge.CheckSolution(solution, testcases);
             return verdict;
         }
 
@@ -143,9 +151,6 @@ namespace Server {
             }
         }
         public Request ReceiveRequest(Socket socket) {
-            if (socket is null) {
-                throw new InvalidOperationException("Client is not connected to the server.");
-            }
             byte[] buffer = new byte[CHUNK_SIZE];
             StringBuilder stringBuilder = new();
             while (true) {
@@ -162,10 +167,6 @@ namespace Server {
             return new Request(jsonString);
         }
         public void SendResponse(Socket socket, Response response) {
-            if (socket is null) {
-                throw new InvalidOperationException("Client is not connected to the server.");
-            }
-  
             Console.WriteLine($"Response: {response.ToJsonString()}");
             Console.WriteLine();
             // Serialize the object to JSON and convert to bytes
