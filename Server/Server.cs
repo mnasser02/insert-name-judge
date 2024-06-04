@@ -1,7 +1,6 @@
 ﻿using System.Text;
 using System.Net;
 using System.Net.Sockets;
-using System.Collections.Generic;
 using Npgsql;
 using Modules;
 
@@ -124,7 +123,7 @@ namespace Server
                         string input = reader.GetString(3);
                         string output = reader.GetString(4);
                         int rating = reader.GetInt32(6);  Console.WriteLine(id+" "+name+"\n "+input+"\n"+output+"\n"+statement);
-                        return new Problem(id, name, statement, rating, input, output);
+                        return new Problem(id, name, statement, rating, input, output,"","");
                       
                     }
                 }

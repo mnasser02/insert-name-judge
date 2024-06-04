@@ -15,13 +15,19 @@ namespace Modules
         public string InputFormat { get; }
         public string OutputFormat { get; }
 
+        public string ExampleOutput { get; }
+        public string ExampleInput { get; }
+
         public Problem(
             int id,
             string name,
             string statement,
             int rating,
             string inputformat,
-            string outputformat
+            string outputformat,
+            string exampleInput,
+            string exampleOutput
+
         )
         {
             Id = id;
@@ -30,6 +36,8 @@ namespace Modules
             Rating = rating;
             InputFormat = inputformat;
             OutputFormat = outputformat;
+            ExampleInput = exampleInput;
+            ExampleOutput = exampleOutput;
         }
     }
 }

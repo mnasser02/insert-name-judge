@@ -24,8 +24,9 @@ namespace Client
         {
         //  private ProblemController problemController;
         // private TestCaseController testCaseController;
-      static  IPHostEntry ipHostEntry = Dns.GetHostEntry("localhost");
-           static IPAddress serverIp = ipHostEntry.AddressList[0];
+
+        static bool Lock=false;
+           static IPAddress serverIp =IPAddress.Parse("192.168.137.18");
 
           static  client client = new(serverIp);
         public MainWindow()
@@ -54,8 +55,7 @@ namespace Client
 
         }
          
-
-    
+            
 
   
 
@@ -65,12 +65,15 @@ namespace Client
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            
-            var selectedItem = (TextBlock)ProblemListBox.SelectedItem;
-            int id = int.Parse(selectedItem.Text.Split(' ')[0]);
-            Solution gg = new Solution(id, Language.SelectedItem.ToString(), Code.Text);
-            String verdict =client.SubmitSolution(gg);
-            Verdict.Text = verdict;
+            if (!Lock) {
+                Lock = false;
+                    var selectedItem = (TextBlock)ProblemListBox.SelectedItem;
+                    int id = int.Parse(selectedItem.Text.Split(' ')[0]);
+                    Solution gg = new Solution(id, Language.SelectedItem.ToString(), Code.Text);
+                    String verdict = client.SubmitSolution(gg);
+                    Verdict.Text = verdict;
+                Lock = true;
+                }
         }
 
         private void ProblemListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
@@ -85,16 +88,18 @@ namespace Client
                  Problem problem=client.GetProblem(id);
                 input.Visibility = Visibility.Visible;
                 output.Visibility = Visibility.Visible;
-
+                Ex.Visibility = Visibility.Visible;
+                Code.Visibility = Visibility.Visible;
+                Language.Visibility = Visibility.Visible;
+                Submit.Visibility = Visibility.Visible;
+               
 
                 ProblemName.Text =""+ problem.Id + ". " + problem.Name;
                 ProblemRating.Text = problem.Rating+"";
                 ProblemStatment.Text = problem.Statement;
                 ProblemOutput.Text = problem.OutputFormat;
                 PrblemInput.Text =problem.InputFormat+"";
-
-
-
+                Example.Text = "Input:\n"+problem.ExampleInput+"\n\n"+"Output:\n"+problem.ExampleOutput+"\n";
 
 
             }
