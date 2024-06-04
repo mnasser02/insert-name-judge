@@ -31,6 +31,7 @@ namespace Client
 
         public Problem GetProblem(int id)
         {
+            Connect();
             Request request = new("GET_PROBLEM", id, typeof(int));
             SendRequest(request);
             Response response = ReceiveResponse();
@@ -39,6 +40,7 @@ namespace Client
 
         public List<(int, string)> GetProblemsIdsNames()
         {
+            Connect();
             Request request = new("GET_PROBLEMS_IDS_NAMES", "empty", typeof(string));
             SendRequest(request);
             Response response = ReceiveResponse();
@@ -47,6 +49,7 @@ namespace Client
 
         public string SubmitSolution(Solution solution)
         {
+            Connect();
             Request request = new("SUBMIT_SOLUTION", solution, typeof(Solution));
             SendRequest(request);
             Response response = ReceiveResponse();

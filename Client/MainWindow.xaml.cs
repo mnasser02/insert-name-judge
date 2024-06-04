@@ -33,17 +33,21 @@ namespace Client
             //Adding problem names to the list
             InitializeComponent();
           
-            Language.Items.Add("JAVA 21");
-            Language.Items.Add("Python");
-            Language.Items.Add("C++ 17");
+            Language.Items.Add("java");
+            Language.Items.Add("py");
+            Language.Items.Add("cpp");
           
           
 
-            client.Connect();
+            
             List<(int, string)> problems = client.GetProblemsIdsNames();
             foreach (var (id, name) in problems)
             {
-               ProblemListBox.Items.Add( ($"{id} {name}"));
+                TextBlock textblock = new TextBlock()
+                {
+                    Text= $"{id} {name}"
+                };
+               ProblemListBox.Items.Add(textblock);
             }
 
           
@@ -53,19 +57,7 @@ namespace Client
 
     
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (ProblemListBox.Visibility == Visibility.Collapsed)
-            {
-                ProblemListBox.Visibility = Visibility.Visible;
-               // ProblemListIcon.Content = "Hide Problems";
-            }
-            else
-            {
-                ProblemListBox.Visibility = Visibility.Collapsed;
-              //  ProblemListIcon.Content = "Show Problems";
-            }
-        }
+  
 
 
 
@@ -73,9 +65,9 @@ namespace Client
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            client.Connect();
-            var selectedItem = ProblemListBox.SelectedItem.ToString();
-            int id = int.Parse(selectedItem.Substring(0, 1));
+            
+            var selectedItem = (TextBlock)ProblemListBox.SelectedItem;
+            int id = int.Parse(selectedItem.Text.Split(' ')[0]);
             Solution gg = new Solution(id, Language.SelectedItem.ToString(), Code.Text);
             String verdict =client.SubmitSolution(gg);
             Verdict.Text = verdict;
@@ -83,21 +75,23 @@ namespace Client
 
         private void ProblemListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
-            client.Connect();
+            
             ListBox listBox = sender as ListBox;
             if (listBox != null && listBox.SelectedItem != null)
             {
                 // Get the selected item
-                var selectedItem = ProblemListBox.SelectedItem.ToString();
-                int id = int.Parse(selectedItem.Split(' ')[0]);
-                 Problem problem=client.GetProblem(id); 
-                ProblemListBox.Visibility = Visibility.Collapsed;
+                var selectedItem = (TextBlock)ProblemListBox.SelectedItem;
+                int id = int.Parse(selectedItem.Text.Split(' ')[0]);
+                 Problem problem=client.GetProblem(id);
+                input.Visibility = Visibility.Visible;
+                output.Visibility = Visibility.Visible;
 
-                ProblemName.Text = problem.Id + ". " + problem.Name;
+
+                ProblemName.Text =""+ problem.Id + ". " + problem.Name;
                 ProblemRating.Text = problem.Rating+"";
                 ProblemStatment.Text = problem.Statement;
                 ProblemOutput.Text = problem.OutputFormat;
-                PrblemInput.Text = problem.InputFormat;
+                PrblemInput.Text =problem.InputFormat+"";
 
 
 
