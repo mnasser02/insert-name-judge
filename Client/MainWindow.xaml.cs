@@ -161,13 +161,13 @@ namespace Client
                 ProblemRatingBorder.Visibility = Visibility.Visible;
                
 
-                ProblemName.Text =""+ problem.Id + ". " + problem.Name;
+                ProblemName.Text =""+ problem.Id + ". " + problem.Name.Replace("\\n", "\n");
                 ProblemRating.Text = problem.Rating+"";
-                ProblemStatment.Text = problem.Statement;
-                ProblemOutput.Text = problem.OutputFormat;
-                PrblemInput.Text =problem.InputFormat+"";
+                ProblemStatment.Text = problem.Statement.Replace("\\n", "\n");
+                ProblemOutput.Text = problem.OutputFormat.Replace("\\n", "\n");
+                PrblemInput.Text =problem.InputFormat.Replace("\\n", "\n") + "";
      
-                Example.Text = "Input:\n" + problem.ExampleInput.Replace("\\n", "\n") + "\n\n" + "Output:\n" + problem.ExampleOutput.Replace("\\n", "\n") + "\n";
+                Example.Text = "Input:\n" + problem.ExampleInput.Replace("\\n", "\n") + "\n" + "Output:\n" + problem.ExampleOutput.Replace("\\n", "\n") + "\n";
 
 
 
