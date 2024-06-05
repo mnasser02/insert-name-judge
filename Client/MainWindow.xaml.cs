@@ -123,6 +123,23 @@ namespace Client
             await Task.Delay(2000);
             Submit.IsEnabled = true;
         }
+        private void Code_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Tab)
+            {
+                var textBox = sender as TextBox;
+                if (textBox != null)
+                {
+                    // Insert a tab character at the current caret position
+                    int caretIndex = textBox.CaretIndex;
+                    textBox.Text = textBox.Text.Insert(caretIndex, "\t");
+                    textBox.CaretIndex = caretIndex + 1;
+
+                    // Prevent the tab key from moving the focus to the next control
+                    e.Handled = true;
+                }
+            }
+        }
 
         private void ProblemListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {

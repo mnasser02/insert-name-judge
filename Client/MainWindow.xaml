@@ -67,7 +67,7 @@
             <TextBlock x:Name="PrblemInput" Grid.Column="1" HorizontalAlignment="Left" Margin="109,275,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="526" Height="65" Foreground="#FFD2D2D2" Text="" FontSize="22"/>
             <Label  Visibility="Hidden" FontWeight="Bold" Name="output" Grid.Column="1" Content="Output" HorizontalAlignment="Left" Margin="108,0,0,0" VerticalAlignment="Center" Foreground="#FFD2D2D2" FontSize="24"/>
             <TextBlock x:Name="ProblemOutput" Grid.Column="1" HorizontalAlignment="Left" Margin="109,418,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="526" Height="62" Foreground="#FFD2D2D2" Text="" FontSize="22"/>
-            <TextBox Visibility="Hidden" AcceptsReturn="True"  Name="Code" Grid.Column="1" HorizontalAlignment="Left" Margin="765,210,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="442"  Height="207"/>
+            <TextBox  PreviewKeyDown="Code_PreviewKeyDown" Visibility="Hidden" AcceptsReturn="True"  Name="Code" Grid.Column="1" HorizontalAlignment="Left" Margin="765,210,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="442"  Height="207"/>
             <ComboBox Visibility="Hidden" Name="Language" Grid.Column="1" HorizontalAlignment="Left" Margin="765,151,0,0" VerticalAlignment="Top" Width="120" Foreground="#FFD2D2D2" Background="Black">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
