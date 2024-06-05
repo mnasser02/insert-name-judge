@@ -15,6 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Modules;
+using ICSharpCode.AvalonEdit.Highlighting;
+using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 
 
 
@@ -26,11 +28,11 @@ namespace Client {
 
         static IPHostEntry iPHostEntry = Dns.GetHostEntry("localhost");
 
-        static IPAddress serverIp = iPHostEntry.AddressList[0];
-        //static IPAddress serverIp =IPAddress.Parse("192.168.137.212");
+       // static IPAddress serverIp = iPHostEntry.AddressList[0];
+        static IPAddress serverIp =IPAddress.Parse("192.168.137.46");
 
         static ClientApp client = new(serverIp);
-        public MainWindow() {
+        public  MainWindow() {
             //Adding problem names to the list
             InitializeComponent();
 
@@ -46,10 +48,12 @@ namespace Client {
 
 
             List<(int, string)> problems = client.GetProblemsIdsNames();
+            int k = 1;
             foreach (var (id, name) in problems) {
                 TextBlock textblock = new TextBlock() {
-                    Text = $"{id} {name}"
+                    Text = $"{k} {name}"
                 };
+                k++;
                 ProblemListBox.Items.Add(textblock);
             }
 
@@ -58,7 +62,7 @@ namespace Client {
 
 
         }
-        private void Submit_MouseEnter(object sender, MouseEventArgs e) {
+        private async void Submit_MouseEnter(object sender, MouseEventArgs e) {
             // Create a ColorAnimation to change the background color to gray
             var colorAnimation = new ColorAnimation {
                 To = Colors.Gray,
@@ -70,7 +74,7 @@ namespace Client {
             brush.BeginAnimation(SolidColorBrush.ColorProperty, colorAnimation);
         }
 
-        private void Submit_MouseLeave(object sender, MouseEventArgs e) {
+        private async void Submit_MouseLeave(object sender, MouseEventArgs e) {
             // Create a ColorAnimation to change the background color back to transparent
             var colorAnimation = new ColorAnimation {
                 To = Colors.Transparent,
@@ -102,7 +106,7 @@ namespace Client {
                 await Task.Delay(300);
                 var selectedItem = (TextBlock)ProblemListBox.SelectedItem;
                 int id = int.Parse(selectedItem.Text.Split(' ')[0]);
-                Solution gg = new Solution(id, Language.SelectedItem.ToString(), Code.Text);
+                Solution gg = new Solution(id, Language.SelectedItem.ToString(), CodeEditor.Text);
                 String verdict = client.SubmitSolution(gg);
                 if (verdict.StartsWith("Acc")) Verdict.Foreground = Brushes.Green;
                 else Verdict.Foreground = Brushes.Red;
@@ -111,7 +115,7 @@ namespace Client {
             await Task.Delay(2000);
             Submit.IsEnabled = true;
         }
-        private void Code_PreviewKeyDown(object sender, KeyEventArgs e) {
+        private async void Code_PreviewKeyDown(object sender, KeyEventArgs e) {
             if (e.Key == Key.Tab) {
                 var textBox = sender as TextBox;
                 if (textBox != null) {
@@ -126,7 +130,7 @@ namespace Client {
             }
         }
 
-        private void ProblemListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e) {
+        private async void ProblemListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e) {
 
             ListBox listBox = sender as ListBox;
             if (listBox != null && listBox.SelectedItem != null) {
@@ -138,9 +142,10 @@ namespace Client {
                 input.Visibility = Visibility.Visible;
                 output.Visibility = Visibility.Visible;
                 Ex.Visibility = Visibility.Visible;
-                Code.Visibility = Visibility.Visible;
+               // Code.Visibility = Visibility.Visible;
                 Language.Visibility = Visibility.Visible;
                 Submit.Visibility = Visibility.Visible;
+                CodeEditor.Visibility = Visibility.Visible;
                 ProblemRatingBorder.Visibility = Visibility.Visible;
 
 
