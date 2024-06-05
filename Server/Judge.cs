@@ -8,6 +8,7 @@ namespace Server {
     public delegate Task<double> RunAsync(Solution solution, Testcase testcase, int timeLimit = 1);
 
     public static partial class Judge {
+        private static readonly Random random = new();
         public static async Task<string> CheckSolution(Solution solution, List<Testcase> testcases) {
             string path = "";
             try {
@@ -31,8 +32,12 @@ namespace Server {
                 if (Directory.Exists(path)) {
                     Directory.Delete(path, true);
                 }
-                if (File.Exists(path)) {
-                    File.Delete(path);
+                else if (File.Exists(path)) {
+                    try {
+                        File.Delete(path);
+                    }
+                    catch (Exception) {
+                    }
                 }
             }
             return "Accepted";
@@ -68,7 +73,7 @@ namespace Server {
         }
 
         public static async Task<(Process, string)> CreateJavaProcessAsync(Solution solution) {
-            string now = DateTime.Now.ToString("yyyyMMddHHmmssffffff");
+            string now = DateTime.Now.ToString("yyyyMMddHHmmssffffff") + random.Next(1000000).ToString();
             string dirPath = Path.Combine(Directory.GetCurrentDirectory(), now); // Using temp directory for isolation
             Directory.CreateDirectory(dirPath); // Create the directory
             Regex classNameRegex = new(@"\bclass\s+(\w+)");
@@ -111,7 +116,7 @@ namespace Server {
         }
 
         public static async Task<(Process, string)> CreatePythonProcessAsync(Solution solution) {
-            string now = DateTime.Now.ToString("yyyyMMddHHmmssffffff");
+            string now = DateTime.Now.ToString("yyyyMMddHHmmssffffff") + random.Next(1000000).ToString();
             string pyFile = now + ".py";
             await File.WriteAllTextAsync(pyFile, solution.Code);
             ProcessStartInfo processStartInfo =
@@ -129,9 +134,10 @@ namespace Server {
         }
 
         public static async Task<(Process, string)> CreateCppProcessAsync(Solution solution) {
-            string now = DateTime.Now.ToString("yyyyMMddHHmmssffffff");
+            string now = DateTime.Now.ToString("yyyyMMddHHmmssffffff") + random.Next(1000000).ToString();
             string cppFile = now + ".cpp";
             string exeFile = now + ".exe";
+            await Console.Out.WriteLineAsync(cppFile);
             await File.WriteAllTextAsync(cppFile, solution.Code);
             ProcessStartInfo processStartInfo =
                 new() {
