@@ -167,7 +167,7 @@ namespace Client
                 ProblemOutput.Text = problem.OutputFormat;
                 PrblemInput.Text =problem.InputFormat+"";
      
-                Example.Text = $"Input:\n{problem.ExampleInput}\n\nOutput:\n{problem.ExampleOutput}\n";
+                Example.Text = "Input:\n" + problem.ExampleInput.Replace("\\n", "\n") + "\n\n" + "Output:\n" + problem.ExampleOutput.Replace("\\n", "\n") + "\n";
 
 
 
