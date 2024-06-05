@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
        mc:Ignorable="d"
-        Title="MainWindow" Height="776" Width="1500"
+        Title="MainWindow" Height="830" Width="1500"
         ResizeMode="CanResize"
         Background="White">
 
@@ -29,15 +29,16 @@
 
     </Window.Resources>
     <ScrollViewer>
-        <Grid Background="Black" Height="760">
+        <Grid Background="Black" Height="760" RenderTransformOrigin="0.636,0.474">
             <Grid.ColumnDefinitions>
 
                 <ColumnDefinition Width="250">
                 </ColumnDefinition>
 
-                <ColumnDefinition>
+                <ColumnDefinition >
 
                 </ColumnDefinition>
+                <ColumnDefinition Width="500 "></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <ListBox 
             Name="ProblemListBox"   Margin="-2,0,0,0" Background="#FF464646" FontSize="14" Foreground="#FFD2D2D2" SelectionChanged="ProblemListBox_SelectionChanged_1"/>
@@ -67,8 +68,8 @@
             <TextBlock x:Name="PrblemInput" Grid.Column="1" HorizontalAlignment="Left" Margin="109,275,0,0" TextWrapping="Wrap" VerticalAlignment="Stretch" Foreground="#FFD2D2D2" Text="" FontSize="22"/>
             <Label  Visibility="Hidden" FontWeight="Bold" Name="output" Grid.Column="1" Content="Output" HorizontalAlignment="Left" Margin="108,0,0,0" VerticalAlignment="Center" Foreground="#FFD2D2D2" FontSize="24"/>
             <TextBlock x:Name="ProblemOutput"  Grid.Column="1" HorizontalAlignment="Left"  Margin="109,418,0,0" TextWrapping="Wrap" VerticalAlignment="Stretch" Foreground="#FFD2D2D2" Text="" FontSize="22"/>
-            <TextBox  PreviewKeyDown="Code_PreviewKeyDown" Visibility="Hidden" AcceptsReturn="True"  Name="Code" Grid.Column="1" HorizontalAlignment="Left" Margin="765,210,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="442"  Height="207"/>
-            <ComboBox Visibility="Hidden" Name="Language" Grid.Column="1" HorizontalAlignment="Left" Margin="765,151,0,0" VerticalAlignment="Top" Width="120" Foreground="#FFD2D2D2" Background="Black">
+            <TextBox   Visibility="Hidden" PreviewKeyDown="Code_PreviewKeyDown"  AcceptsReturn="True"  Name="Code" Grid.Column="2" HorizontalAlignment="Left" Margin="32,226,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="442"  Height="207"/>
+            <ComboBox  Visibility="Hidden" Name="Language" Grid.Column="2" HorizontalAlignment="Left" Margin="48,164,0,0" VerticalAlignment="Top" Width="120" Foreground="#FFD2D2D2" Background="Black">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Foreground="Black" Text="{Binding}" />
@@ -78,8 +79,8 @@
 
             </ComboBox>
 
-            <TextBlock Name="Verdict" Grid.Column="1" HorizontalAlignment="Left" Margin="765,524,0,0" TextWrapping="Wrap" VerticalAlignment="Stretch" Foreground="#FFD2D2D2" Height="119" Width="442" FontSize="22" FontWeight="Bold"/>
-            <Button Name="Submit" Visibility="Hidden" Content="SUBMIT" BorderBrush="Wheat" Grid.Column="1"  HorizontalAlignment="Left" Margin="1091,465,0,0" VerticalAlignment="Top" Click="Button_Click_1" Height="30" Width="116" Background="Transparent" Style="{StaticResource RoundedButtonStyle}" Foreground="#FFD2D2D2" FontSize="14" />
+            <TextBlock  Name="Verdict" Grid.Column="2" HorizontalAlignment="Left" Margin="32,565,0,76" TextWrapping="Wrap" Foreground="#FFD2D2D2" Height="119" Width="442" FontSize="22" FontWeight="Bold"/>
+            <Button  Visibility="Hidden"  Name="Submit"  Content="SUBMIT" BorderBrush="Wheat" Grid.Column="2"  HorizontalAlignment="Left" Margin="358,481,0,0" VerticalAlignment="Top" Click="Button_Click_1" Height="30" Width="116" Background="Transparent" Style="{StaticResource RoundedButtonStyle}" Foreground="#FFD2D2D2" FontSize="14" />
             <TextBlock x:Name="ProblemName" Grid.Column="1" HorizontalAlignment="Left" Margin="109,43,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FFD2D2D2" FontSize="26"/>
             <TextBlock Foreground="White" Name="Example" Grid.Column="1" HorizontalAlignment="Left"  Margin="109,563,0,0" TextWrapping="Wrap" VerticalAlignment="Stretch" FontSize="22"/>
             <Label  Visibility="Hidden" FontWeight="Bold" Name="Ex"   Foreground="White" FontSize="24" Grid.Column="1" Content="Example :" HorizontalAlignment="Left" Height="40" Margin="109,502,0,0" VerticalAlignment="Top" Width="116"/>

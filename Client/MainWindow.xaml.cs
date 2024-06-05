@@ -165,7 +165,7 @@ namespace Client
                 ProblemRating.Text = problem.Rating+"";
                 ProblemStatment.Text = problem.Statement.Replace("\\n", "\n");
                 ProblemOutput.Text = problem.OutputFormat.Replace("\\n", "\n");
-                PrblemInput.Text =problem.InputFormat.Replace("\\n", "\n") + "";
+                PrblemInput.Text = problem.InputFormat.Replace("\\n", "\n") + ""; 
      
                 Example.Text = "Input:\n" + problem.ExampleInput.Replace("\\n", "\n") + "\n" + "Output:\n" + problem.ExampleOutput.Replace("\\n", "\n") + "\n";
 
