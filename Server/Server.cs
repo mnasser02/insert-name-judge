@@ -145,6 +145,8 @@ namespace Server {
                             int id = reader.GetInt32(0);
                             string input = reader.GetString(1);
                             string output = reader.GetString(2);
+                            Console.WriteLine(input);
+                            Console.WriteLine(output);
                             testcases.Add(new Testcase(id, input, output, problemId));
                         }
                         return testcases;

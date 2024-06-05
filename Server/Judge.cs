@@ -152,6 +152,7 @@ namespace Server {
             compileProcess.Start();
             await compileProcess.WaitForExitAsync();
             if (compileProcess.ExitCode != 0) {
+                Console.WriteLine(compileProcess.StandardError.ReadToEnd().ToString());
                 throw new Exception("Compilation Error");
             }
             if (File.Exists(cppFile)) {
