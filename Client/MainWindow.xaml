@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
        mc:Ignorable="d"
-        Title="MainWindow" Height="830" Width="1500"
+        Title="MainWindow" Height="900" Width="1500"
         ResizeMode="CanResize"
         Background="White">
 
@@ -29,7 +29,7 @@
 
     </Window.Resources>
     <ScrollViewer>
-        <Grid Background="Black" Height="760" RenderTransformOrigin="0.636,0.474">
+        <Grid Background="Black" Height="880" RenderTransformOrigin="0.636,0.474" Width="1490">
             <Grid.ColumnDefinitions>
 
                 <ColumnDefinition Width="250">
@@ -43,7 +43,7 @@
             <ListBox 
             Name="ProblemListBox"   Margin="-2,0,0,0" Background="#FF464646" FontSize="14" Foreground="#FFD2D2D2" SelectionChanged="ProblemListBox_SelectionChanged_1"/>
 
-            <TextBlock  x:Name="ProblemStatment" Grid.Column="1" HorizontalAlignment="Left" Margin="109,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FFD2D2D2" Height="71" Width="509" Text="" FontSize="22"/>
+            <TextBlock  x:Name="ProblemStatment" Grid.Column="1" HorizontalAlignment="Left" Margin="109,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FFD2D2D2" Height="71" Width="509" Text="" FontSize="22"/>
             <Border  Visibility="Hidden" Name="ProblemRatingBorder"  Grid.Column="1" Margin="109,80,1065,633" Background="#FF3D3D3D" CornerRadius="5" RenderTransformOrigin="0.5,0.5">
                 <Border.RenderTransform>
                     <TransformGroup>
@@ -64,10 +64,10 @@
                     </TextBlock.RenderTransform>
                 </TextBlock>
             </Border>
-            <Label  Visibility="Hidden" FontWeight="Bold"  Name="input" Grid.Column="1" Content="Input" HorizontalAlignment="Left" Margin="109,226,0,0" VerticalAlignment="Top" Foreground="#FFD2D2D2" FontSize="24" Width="148"/>
-            <TextBlock x:Name="PrblemInput" Grid.Column="1" HorizontalAlignment="Left" Margin="109,275,0,0" TextWrapping="Wrap" VerticalAlignment="Stretch" Foreground="#FFD2D2D2" Text="" FontSize="22"/>
-            <Label  Visibility="Hidden" FontWeight="Bold" Name="output" Grid.Column="1" Content="Output" HorizontalAlignment="Left" Margin="108,0,0,0" VerticalAlignment="Center" Foreground="#FFD2D2D2" FontSize="24"/>
-            <TextBlock x:Name="ProblemOutput"  Grid.Column="1" HorizontalAlignment="Left"  Margin="109,418,0,0" TextWrapping="Wrap" VerticalAlignment="Stretch" Foreground="#FFD2D2D2" Text="" FontSize="22"/>
+            <Label Visibility="Hidden"   FontWeight="Bold"  Name="input" Grid.Column="1" Content="Input" HorizontalAlignment="Left" Margin="109,244,0,0" VerticalAlignment="Top" Foreground="#FFD2D2D2" FontSize="24" Width="148"/>
+            <TextBlock x:Name="PrblemInput" Grid.Column="1" HorizontalAlignment="Left" Margin="109,294,0,516" TextWrapping="Wrap" Foreground="#FFD2D2D2" Text="" FontSize="22" />
+            <Label  Visibility="Hidden" FontWeight="Bold" Name="output" Grid.Column="1" Content="Output" HorizontalAlignment="Left" Margin="109,371,0,0" VerticalAlignment="Top" Foreground="#FFD2D2D2" FontSize="24"/>
+            <TextBlock x:Name="ProblemOutput"  Grid.Column="1" HorizontalAlignment="Left"  Margin="109,418,0,419" TextWrapping="Wrap" Foreground="#FFD2D2D2" Text="" FontSize="22" VerticalAlignment="Stretch"/>
             <TextBox   Visibility="Hidden" PreviewKeyDown="Code_PreviewKeyDown"  AcceptsReturn="True"  Name="Code" Grid.Column="2" HorizontalAlignment="Left" Margin="32,226,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="442"  Height="207"/>
             <ComboBox  Visibility="Hidden" Name="Language" Grid.Column="2" HorizontalAlignment="Left" Margin="48,164,0,0" VerticalAlignment="Top" Width="120" Foreground="#FFD2D2D2" Background="Black">
                 <ComboBox.ItemTemplate>
