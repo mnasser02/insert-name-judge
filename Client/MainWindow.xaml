@@ -1,0 +1,69 @@
+﻿<Window x:Class="Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client"
+       mc:Ignorable="d"
+        Title="MainWindow" Height="776" Width="1500"
+        ResizeMode="CanResize"
+        Background="White">
+
+
+    <Window.Resources>
+        <!-- Style definition -->
+        <Style x:Key="RoundedButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="20">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+    <ScrollViewer>
+        <Grid Background="Black" Height="760">
+            <Grid.ColumnDefinitions>
+
+                <ColumnDefinition Width="250">
+                </ColumnDefinition>
+
+                <ColumnDefinition>
+
+                </ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <ListBox 
+            Name="ProblemListBox"   Margin="-2,0,0,0" Background="#FF464646" FontSize="14" Foreground="#FFD2D2D2" SelectionChanged="ProblemListBox_SelectionChanged_1"/>
+
+            <TextBlock  x:Name="ProblemStatment" Grid.Column="1" HorizontalAlignment="Left" Margin="109,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FFD2D2D2" Height="201" Width="509" Text=""/>
+            <Border Grid.Column="1" Margin="108,123,1127,839" Background="#FF3D3D3D" CornerRadius="5">
+                <TextBlock x:Name="ProblemRating" TextWrapping="Wrap" Text="1500" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FFD2D2D2"/>
+            </Border>
+            <Label Visibility="Hidden" Name="input" Grid.Column="1" Content="Input" HorizontalAlignment="Left" Margin="108,357,0,0" VerticalAlignment="Top" Foreground="#FFD2D2D2" FontSize="16" Width="148"/>
+            <TextBlock x:Name="PrblemInput" Grid.Column="1" HorizontalAlignment="Left" Margin="109,410,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="526" Height="142" Foreground="#FFD2D2D2" Text=""/>
+            <Label  Visibility="Hidden" Name="output" Grid.Column="1" Content="Output" HorizontalAlignment="Left" Margin="108,557,0,0" VerticalAlignment="Top" Foreground="#FFD2D2D2" FontSize="16"/>
+            <TextBlock x:Name="ProblemOutput" Grid.Column="1" HorizontalAlignment="Left" Margin="109,593,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="526" Height="142" Foreground="#FFD2D2D2" Text=""/>
+            <TextBox  AcceptsReturn="True"  Name="Code" Grid.Column="1" HorizontalAlignment="Left" Margin="765,210,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="442"  Height="207"/>
+            <ComboBox  Name="Language" Grid.Column="1" HorizontalAlignment="Left" Margin="765,151,0,0" VerticalAlignment="Top" Width="120" Foreground="#FFD2D2D2" Background="Black">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Foreground="Black" Text="{Binding}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+
+
+            </ComboBox>
+
+            <TextBlock Name="Verdict" Grid.Column="1" HorizontalAlignment="Left" Margin="771,465,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FFD2D2D2" Height="35" Width="234" FontSize="22" FontWeight="Bold"/>
+            <Button Content="SUBMIT" BorderBrush="Wheat" Grid.Column="1"  HorizontalAlignment="Left" Margin="1091,465,0,0" VerticalAlignment="Top" Click="Button_Click_1" Height="30" Width="116" Background="Transparent" Style="{StaticResource RoundedButtonStyle}" Foreground="#FFD2D2D2" FontSize="14" />
+            <TextBlock x:Name="ProblemName" Grid.Column="1" HorizontalAlignment="Left" Margin="109,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FFD2D2D2" FontSize="24"/>
+        </Grid>
+    </ScrollViewer>
+</Window>

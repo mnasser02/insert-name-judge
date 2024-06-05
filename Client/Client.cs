@@ -6,14 +6,14 @@ using System.Collections.Generic;
 using Modules;
 
 namespace Client {
-    class Client {
+    class ClientApp {
         private static readonly string END_TOKEN = "!##<|EOF|>";
         private readonly IPAddress serverIp;
         private readonly int port;
         private Socket? socket;
         private const int CHUNK_SIZE = 1024;
 
-        public Client(IPAddress ip, int port = 11000) {
+        public ClientApp(IPAddress ip, int port = 11000) {
             this.serverIp = ip;
             this.port = port;
         }
@@ -26,13 +26,15 @@ namespace Client {
         }
 
         public Problem GetProblem(int id) {
-            Request request = new("GET_PROBLEM", id, typeof(int));  
+            Connect();
+            Request request = new("GET_PROBLEM", id, typeof(int));
             SendRequest(request);
             Response response = ReceiveResponse();
             return (Problem)response.Body!;
         }
 
         public List<(int, string)> GetProblemsIdsNames() {
+            Connect();
             Request request = new("GET_PROBLEMS_IDS_NAMES", "empty", typeof(string));
             SendRequest(request);
             Response response = ReceiveResponse();
@@ -40,7 +42,8 @@ namespace Client {
         }
 
         public string SubmitSolution(Solution solution) {
-            Request request = new("SUBMIT_SOLUTION", solution, typeof(Solution));   
+            Connect();
+            Request request = new("SUBMIT_SOLUTION", solution, typeof(Solution));
             SendRequest(request);
             Response response = ReceiveResponse();
             return (string)response.Body!;

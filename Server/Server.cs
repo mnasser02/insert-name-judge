@@ -109,6 +109,7 @@ namespace Server {
                         string output = reader.GetString(4);
                         int rating = reader.GetInt32(6);
                         return new Problem(id, name, statement, rating, input, output);
+                      
                     }
                 }
             }
