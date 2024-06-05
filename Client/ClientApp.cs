@@ -27,7 +27,7 @@ namespace Client {
 
         public Problem GetProblem(int id) {
             Connect();
-            Request request = new("GET_PROBLEM", id, typeof(int));  
+            Request request = new("GET_PROBLEM", id, typeof(int));
             SendRequest(request);
             Response response = ReceiveResponse();
             Problem problem = (Problem)response.Body!;
@@ -45,14 +45,14 @@ namespace Client {
 
         public string SubmitSolution(Solution solution) {
             Connect();
-            Request request = new("SUBMIT_SOLUTION", solution, typeof(Solution));   
+            Request request = new("SUBMIT_SOLUTION", solution, typeof(Solution));
             SendRequest(request);
             Response response = ReceiveResponse();
             string verdict = (string)response.Body!;
             return verdict;
         }
 
-        public void SendRequest(Request request) {
+        private void SendRequest(Request request) {
             if (socket is null) {
                 throw new InvalidOperationException("Client is not connected to the server.");
             }
@@ -74,7 +74,7 @@ namespace Client {
             byte[] endTokenBytes = Encoding.UTF8.GetBytes(END_TOKEN);
             socket.Send(endTokenBytes);
         }
-        public Response ReceiveResponse() {
+        private Response ReceiveResponse() {
             if (socket is null) {
                 throw new InvalidOperationException("Client is not connected to the server.");
             }
@@ -95,8 +95,6 @@ namespace Client {
             Response response = new(jsonString);
             return response;
         }
-
-
 
         public void Disconnect() {
             if (socket is null) {

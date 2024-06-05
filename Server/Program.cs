@@ -16,9 +16,11 @@ namespace Server {
             //Request req = (Request)Jsonifier.ToObject("{\"RequestType\":\"GET_PROBLEM\",\"Body\":1, \"ObjectType\":\"Modules.Request\"}");
             //Console.WriteLine(req.Body);
             const int PORT = 11000;
-            IPHostEntry iPHostEntry = Dns.GetHostEntry("localhost");
+            //IPHostEntry iPHostEntry = Dns.GetHostEntry("localhost");
+            //IPAddress ip = iPHostEntry.AddressList[0];
 
-            IPAddress ip = iPHostEntry.AddressList[0];
+            IPAddress ip = IPAddress.Parse("192.168.137.212");
+
             Server server = new(connectionString, ip);
 
             server.StartServer(PORT);
