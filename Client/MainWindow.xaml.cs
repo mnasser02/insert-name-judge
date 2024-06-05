@@ -15,28 +15,27 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Modules;
+using ICSharpCode.AvalonEdit.Highlighting;
+using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 
 
 
-namespace Client
-{
-   
-        public partial class MainWindow : Window
-        {
+namespace Client {
+
+    public partial class MainWindow : Window {
         //  private ProblemController problemController;
         // private TestCaseController testCaseController;
 
-       static IPHostEntry iPHostEntry = Dns.GetHostEntry("localhost");
+        static IPHostEntry iPHostEntry = Dns.GetHostEntry("localhost");
 
-        static IPAddress serverIp = iPHostEntry.AddressList[0];
-        //static IPAddress serverIp =IPAddress.Parse("192.168.137.212");
+       // static IPAddress serverIp = iPHostEntry.AddressList[0];
+        static IPAddress serverIp =IPAddress.Parse("192.168.137.46");
 
-          static  client client = new(serverIp);
-        public MainWindow()
-        {
+        static ClientApp client = new(serverIp);
+        public  MainWindow() {
             //Adding problem names to the list
             InitializeComponent();
-          
+
             Language.Items.Add("java");
             Language.Items.Add("py");
             Language.Items.Add("cpp");
@@ -49,25 +48,23 @@ namespace Client
 
 
             List<(int, string)> problems = client.GetProblemsIdsNames();
-            foreach (var (id, name) in problems)
-            {
-                TextBlock textblock = new TextBlock()
-                {
-                    Text= $"{id} {name}"
+            int k = 1;
+            foreach (var (id, name) in problems) {
+                TextBlock textblock = new TextBlock() {
+                    Text = $"{k} {name}"
                 };
-               ProblemListBox.Items.Add(textblock);
+                k++;
+                ProblemListBox.Items.Add(textblock);
             }
 
 
-          
+
 
 
         }
-        private void Submit_MouseEnter(object sender, MouseEventArgs e)
-        {
+        private async void Submit_MouseEnter(object sender, MouseEventArgs e) {
             // Create a ColorAnimation to change the background color to gray
-            var colorAnimation = new ColorAnimation
-            {
+            var colorAnimation = new ColorAnimation {
                 To = Colors.Gray,
                 Duration = new Duration(TimeSpan.FromSeconds(0.2))
             };
@@ -77,11 +74,9 @@ namespace Client
             brush.BeginAnimation(SolidColorBrush.ColorProperty, colorAnimation);
         }
 
-        private void Submit_MouseLeave(object sender, MouseEventArgs e)
-        {
+        private async void Submit_MouseLeave(object sender, MouseEventArgs e) {
             // Create a ColorAnimation to change the background color back to transparent
-            var colorAnimation = new ColorAnimation
-            {
+            var colorAnimation = new ColorAnimation {
                 To = Colors.Transparent,
                 Duration = new Duration(TimeSpan.FromSeconds(0.2))
             };
@@ -99,22 +94,19 @@ namespace Client
 
 
 
-        private async void Button_Click_1(object sender, RoutedEventArgs e)
-        {
+        private async void Button_Click_1(object sender, RoutedEventArgs e) {
             Submit.IsEnabled = false;
-            
-            if (Language.SelectedItem == null)
-            {
+
+            if (Language.SelectedItem == null) {
                 Verdict.Text = "Please select a language";
                 Verdict.Foreground = Brushes.White;
             }
-            else
-            {
+            else {
                 Verdict.Text = "";
                 await Task.Delay(300);
                 var selectedItem = (TextBlock)ProblemListBox.SelectedItem;
                 int id = int.Parse(selectedItem.Text.Split(' ')[0]);
-                Solution gg = new Solution(id, Language.SelectedItem.ToString(), Code.Text);
+                Solution gg = new Solution(id, Language.SelectedItem.ToString(), CodeEditor.Text);
                 String verdict = client.SubmitSolution(gg);
                 if (verdict.StartsWith("Acc")) Verdict.Foreground = Brushes.Green;
                 else Verdict.Foreground = Brushes.Red;
@@ -123,13 +115,10 @@ namespace Client
             await Task.Delay(2000);
             Submit.IsEnabled = true;
         }
-        private void Code_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Tab)
-            {
+        private async void Code_PreviewKeyDown(object sender, KeyEventArgs e) {
+            if (e.Key == Key.Tab) {
                 var textBox = sender as TextBox;
-                if (textBox != null)
-                {
+                if (textBox != null) {
                     // Insert a tab character at the current caret position
                     int caretIndex = textBox.CaretIndex;
                     textBox.Text = textBox.Text.Insert(caretIndex, "\t");
@@ -141,41 +130,39 @@ namespace Client
             }
         }
 
-        private void ProblemListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
-        {
-            
+        private async void ProblemListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e) {
+
             ListBox listBox = sender as ListBox;
-            if (listBox != null && listBox.SelectedItem != null)
-            {
+            if (listBox != null && listBox.SelectedItem != null) {
                 Verdict.Text = "";
                 // Get the selected item
                 var selectedItem = (TextBlock)ProblemListBox.SelectedItem;
                 int id = int.Parse(selectedItem.Text.Split(' ')[0]);
-                 Problem problem=client.GetProblem(id);
+                Problem problem = client.GetProblem(id);
                 input.Visibility = Visibility.Visible;
                 output.Visibility = Visibility.Visible;
                 Ex.Visibility = Visibility.Visible;
-                Code.Visibility = Visibility.Visible;
+               // Code.Visibility = Visibility.Visible;
                 Language.Visibility = Visibility.Visible;
                 Submit.Visibility = Visibility.Visible;
+                CodeEditor.Visibility = Visibility.Visible;
                 ProblemRatingBorder.Visibility = Visibility.Visible;
-               
 
-                ProblemName.Text =""+ problem.Id + ". " + problem.Name.Replace("\\n", "\n");
-                ProblemRating.Text = problem.Rating+"";
+
+                ProblemName.Text = "" + problem.Id + ". " + problem.Name.Replace("\\n", "\n");
+                ProblemRating.Text = problem.Rating + "";
                 ProblemStatment.Text = problem.Statement.Replace("\\n", "\n");
                 ProblemOutput.Text = problem.OutputFormat.Replace("\\n", "\n");
-                PrblemInput.Text = problem.InputFormat.Replace("\\n", "\n") + ""; 
-     
-                Example.Text = "Input:\n" + problem.ExampleInput.Replace("\\n", "\n") + "\n" + "Output:\n" + problem.ExampleOutput.Replace("\\n", "\n") + "\n";
+                PrblemInput.Text = problem.InputFormat.Replace("\\n", "\n") + "";
+
+                Example.Text = "Input:\n" + problem.ExampleInput.Replace("\\n", "\n") + "\n\n" + "Output:\n" + problem.ExampleOutput.Replace("\\n", "\n") + "\n\n";
 
 
 
             }
         }
 
-      
-    }
-    }
 
+    }
+}
 

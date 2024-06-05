@@ -2,45 +2,36 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace Modules
-{
-    public class Response
-    {
+namespace Modules {
+    public class Response {
 
         public object Body { get; set; }
 
         public Type BodyType { get; }
 
-        [Newtonsoft.Json.JsonConstructor]
-        public Response(object body, Type bodyType)
-        {
+        [JsonConstructor]
+        public Response(object body, Type bodyType) {
             Body = body;
             BodyType = bodyType;
         }
 
-        public Response(string jsonString)
-        {
-            var res = JsonConvert.DeserializeObject<Response>(jsonString, new JsonSerializerSettings
-            {
+        public Response(string jsonString) {
+            var res = JsonConvert.DeserializeObject<Response>(jsonString, new JsonSerializerSettings {
                 ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
             })!;
             BodyType = res.BodyType;
-            if (BodyType == typeof(string))
-            {
+            if (BodyType == typeof(string)) {
                 Body = res.Body.ToString()!;
             }
-            else
-            {
+            else {
                 Body = JsonConvert.DeserializeObject(res.Body.ToString()!, BodyType)!;
             }
         }
 
-        public string ToJsonString()
-        {
+        public string ToJsonString() {
             return JsonConvert.SerializeObject(this);
         }
 

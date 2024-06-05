@@ -7,7 +7,9 @@
        mc:Ignorable="d"
         Title="MainWindow" Height="900" Width="1500"
         ResizeMode="CanResize"
-        Background="White">
+        Background="White"
+        xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+>
 
 
     <Window.Resources>
@@ -78,6 +80,19 @@
 
 
             </ComboBox>
+
+            <avalonedit:TextEditor Name="CodeEditor"
+                       Grid.Column="2"
+                       HorizontalAlignment="Left"
+                       Margin="32,226,0,0"
+                       VerticalAlignment="Top"
+                       Width="442"
+                       Height="207"
+                       FontFamily="Consolas"
+                       FontSize="14"
+                       ShowLineNumbers="True"
+                       SyntaxHighlighting="java"
+                                   Visibility="Hidden"/>
 
             <TextBlock  Name="Verdict" Grid.Column="2" HorizontalAlignment="Left" Margin="32,565,0,76" TextWrapping="Wrap" Foreground="#FFD2D2D2" Height="119" Width="442" FontSize="22" FontWeight="Bold"/>
             <Button  Visibility="Hidden"  Name="Submit"  Content="SUBMIT" BorderBrush="Wheat" Grid.Column="2"  HorizontalAlignment="Left" Margin="358,481,0,0" VerticalAlignment="Top" Click="Button_Click_1" Height="30" Width="116" Background="Transparent" Style="{StaticResource RoundedButtonStyle}" Foreground="#FFD2D2D2" FontSize="14" />
