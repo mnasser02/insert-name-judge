@@ -14,22 +14,28 @@ namespace Modules
         public int Rating { get; }
         public string InputFormat { get; }
         public string OutputFormat { get; }
+        public string ExampleInput { get; }
+        public string ExampleOutput { get; }
 
         public Problem(
             int id,
             string name,
             string statement,
             int rating,
-            string inputformat,
-            string outputformat
+            string inputFormat,
+            string outputFormat,
+            string exampleInput,
+            string exampleOutput
         )
         {
             Id = id;
             Name = name;
             Statement = statement;
             Rating = rating;
-            InputFormat = inputformat;
-            OutputFormat = outputformat;
+            InputFormat = inputFormat;
+            OutputFormat = outputFormat;
+            ExampleInput = exampleInput;
+            ExampleOutput = exampleOutput;
         }
     }
 }

@@ -30,7 +30,8 @@ namespace Client {
             Request request = new("GET_PROBLEM", id, typeof(int));
             SendRequest(request);
             Response response = ReceiveResponse();
-            return (Problem)response.Body!;
+            Problem problem = (Problem)response.Body!;
+            return problem;
         }
 
         public List<(int, string)> GetProblemsIdsNames() {
@@ -38,7 +39,8 @@ namespace Client {
             Request request = new("GET_PROBLEMS_IDS_NAMES", "empty", typeof(string));
             SendRequest(request);
             Response response = ReceiveResponse();
-            return (List<(int, string)>)response.Body!;
+            List<(int, string)> problems = (List<(int, string)>)response.Body!;
+            return problems;
         }
 
         public string SubmitSolution(Solution solution) {
@@ -46,14 +48,17 @@ namespace Client {
             Request request = new("SUBMIT_SOLUTION", solution, typeof(Solution));
             SendRequest(request);
             Response response = ReceiveResponse();
-            return (string)response.Body!;
+            string verdict = (string)response.Body!;
+            return verdict;
         }
-        public void SendRequest(Request request) {
+
+        private void SendRequest(Request request) {
             if (socket is null) {
                 throw new InvalidOperationException("Client is not connected to the server.");
             }
             // Serialize the object to JSON and convert to bytes
-            Console.WriteLine(request.ToJsonString());
+            Console.WriteLine($"Request: {request.ToJsonString()}");
+            Console.WriteLine();
             byte[] data = Encoding.UTF8.GetBytes(request.ToJsonString());
             int totalBytesSent = 0;
             int dataLength = data.Length;
@@ -69,7 +74,7 @@ namespace Client {
             byte[] endTokenBytes = Encoding.UTF8.GetBytes(END_TOKEN);
             socket.Send(endTokenBytes);
         }
-        public Response ReceiveResponse() {
+        private Response ReceiveResponse() {
             if (socket is null) {
                 throw new InvalidOperationException("Client is not connected to the server.");
             }
@@ -85,11 +90,11 @@ namespace Client {
                 stringBuilder.Append(lastRecieved);
             }
             string jsonString = stringBuilder.ToString();
+            Console.WriteLine($"Response: {jsonString}");
+            Console.WriteLine();
             Response response = new(jsonString);
             return response;
         }
-
-
 
         public void Disconnect() {
             if (socket is null) {

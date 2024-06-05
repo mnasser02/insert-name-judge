@@ -21,7 +21,7 @@ namespace Server {
                 path = process_path.Item2;
                 for (int i = 0; i < testcases.Count; i++) {
                     var testcase = testcases[i];
-                    double executionTime = await RunProcess(process, testcase);
+                    double executionTime = await RunProcess(process, testcase, i + 1);
                 }
             }
             catch (Exception e) {
@@ -41,6 +41,7 @@ namespace Server {
         public static async Task<double> RunProcess(
             Process process,
             Testcase testcase,
+            int id,
             int timeLimit = 1
         ) {
             Stopwatch stopwatch = new();
@@ -57,17 +58,17 @@ namespace Server {
                 process.Kill();
                 throw new Exception("Time limit exceeded");
             }
-            string output = process.StandardOutput.ReadToEnd();
+            string output = await process.StandardOutput.ReadToEndAsync();
             if (output.Trim() != testcase.Output.Trim()) {
                 throw new Exception(
-                    $"Wrong answer {testcase.Id}, Expected: {testcase.Output}, Got: {output}"
+                    $"Wrong answer testcase {id}, Expected: {testcase.Output}, Got: {output}"
                 );
             }
             return stopwatch.Elapsed.TotalSeconds;
         }
 
         public static async Task<(Process, string)> CreateJavaProcessAsync(Solution solution) {
-            string now = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+            string now = DateTime.Now.ToString("yyyyMMddHHmmssffffff");
             string dirPath = Path.Combine(Directory.GetCurrentDirectory(), now); // Using temp directory for isolation
             Directory.CreateDirectory(dirPath); // Create the directory
             Regex classNameRegex = new(@"\bclass\s+(\w+)");
@@ -82,6 +83,7 @@ namespace Server {
                 new() {
                     FileName = "javac",
                     Arguments = $"\"{javaFile}\"",
+                    RedirectStandardInput = true,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     UseShellExecute = false,
@@ -93,21 +95,23 @@ namespace Server {
             if (compileProcess.ExitCode != 0) {
                 throw new Exception("Compilation Error");
             }
+            Console.WriteLine(javaFile[..^5]);
             processStartInfo = new() {
                 FileName = "java",
-                Arguments = $"{now}",
+                Arguments = $"{className}",
                 RedirectStandardInput = true,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 UseShellExecute = false,
-                CreateNoWindow = true
+                CreateNoWindow = true,
+                WorkingDirectory = dirPath
             };
             Process runProcess = new() { StartInfo = processStartInfo };
             return (runProcess, dirPath);
         }
 
         public static async Task<(Process, string)> CreatePythonProcessAsync(Solution solution) {
-            string now = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+            string now = DateTime.Now.ToString("yyyyMMddHHmmssffffff");
             string pyFile = now + ".py";
             await File.WriteAllTextAsync(pyFile, solution.Code);
             ProcessStartInfo processStartInfo =
@@ -125,7 +129,7 @@ namespace Server {
         }
 
         public static async Task<(Process, string)> CreateCppProcessAsync(Solution solution) {
-            string now = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+            string now = DateTime.Now.ToString("yyyyMMddHHmmssffffff");
             string cppFile = now + ".cpp";
             string exeFile = now + ".exe";
             await File.WriteAllTextAsync(cppFile, solution.Code);
