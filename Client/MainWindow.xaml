@@ -66,7 +66,7 @@
             </Border>
             <Label Visibility="Hidden"   FontWeight="Bold"  Name="input" Grid.Column="1" Content="Input" HorizontalAlignment="Left" Margin="109,244,0,0" VerticalAlignment="Top" Foreground="#FFD2D2D2" FontSize="24" Width="148"/>
             <TextBlock x:Name="PrblemInput" Grid.Column="1" HorizontalAlignment="Left" Margin="109,294,0,516" TextWrapping="Wrap" Foreground="#FFD2D2D2" Text="" FontSize="22" />
-            <Label  Visibility="Hidden" FontWeight="Bold" Name="output" Grid.Column="1" Content="Output" HorizontalAlignment="Left" Margin="109,371,0,0" VerticalAlignment="Top" Foreground="#FFD2D2D2" FontSize="24"/>
+            <Label Visibility="Hidden"  FontWeight="Bold" Name="output" Grid.Column="1" Content="Output" HorizontalAlignment="Left" Margin="109,371,0,0" VerticalAlignment="Top" Foreground="#FFD2D2D2" FontSize="24"/>
             <TextBlock x:Name="ProblemOutput"  Grid.Column="1" HorizontalAlignment="Left"  Margin="109,418,0,419" TextWrapping="Wrap" Foreground="#FFD2D2D2" Text="" FontSize="22" VerticalAlignment="Stretch"/>
             <TextBox   Visibility="Hidden" PreviewKeyDown="Code_PreviewKeyDown"  AcceptsReturn="True"  Name="Code" Grid.Column="2" HorizontalAlignment="Left" Margin="32,226,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="442"  Height="207"/>
             <ComboBox  Visibility="Hidden" Name="Language" Grid.Column="2" HorizontalAlignment="Left" Margin="48,164,0,0" VerticalAlignment="Top" Width="120" Foreground="#FFD2D2D2" Background="Black">
@@ -82,8 +82,8 @@
             <TextBlock  Name="Verdict" Grid.Column="2" HorizontalAlignment="Left" Margin="32,565,0,76" TextWrapping="Wrap" Foreground="#FFD2D2D2" Height="119" Width="442" FontSize="22" FontWeight="Bold"/>
             <Button  Visibility="Hidden"  Name="Submit"  Content="SUBMIT" BorderBrush="Wheat" Grid.Column="2"  HorizontalAlignment="Left" Margin="358,481,0,0" VerticalAlignment="Top" Click="Button_Click_1" Height="30" Width="116" Background="Transparent" Style="{StaticResource RoundedButtonStyle}" Foreground="#FFD2D2D2" FontSize="14" />
             <TextBlock x:Name="ProblemName" Grid.Column="1" HorizontalAlignment="Left" Margin="109,43,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FFD2D2D2" FontSize="26"/>
-            <TextBlock Foreground="White" Name="Example" Grid.Column="1" HorizontalAlignment="Left"  Margin="109,563,0,0" TextWrapping="Wrap" VerticalAlignment="Stretch" FontSize="22"/>
-            <Label  Visibility="Hidden" FontWeight="Bold" Name="Ex"   Foreground="White" FontSize="24" Grid.Column="1" Content="Example :" HorizontalAlignment="Left" Height="40" Margin="109,502,0,0" VerticalAlignment="Top" Width="116"/>
+            <TextBlock Foreground="White" Name="Example" Grid.Column="1" HorizontalAlignment="Left"  Margin="109,593,0,0" TextWrapping="Wrap" FontSize="22"/>
+            <Label  Visibility="Hidden" FontWeight="Bold" Name="Ex"   Foreground="White" FontSize="24" Grid.Column="1" Content="Example :" HorizontalAlignment="Left" Height="40" Margin="109,532,0,0" VerticalAlignment="Top" Width="116"/>
 
 
         </Grid>
