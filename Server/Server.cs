@@ -42,8 +42,8 @@ namespace Server {
                 clientThread.Start(handler);
             }
 
-        }
-        public void HandleClient(object? obj) {
+        }   
+        private void HandleClient(object? obj) {
             if (obj == null) {
                 throw new InvalidOperationException("Client is not connected to the server.");
             }
@@ -82,7 +82,7 @@ namespace Server {
             handler.Close();
         }
 
-        public List<(int, string)> GetProblemsIdsNames() {
+        private List<(int, string)> GetProblemsIdsNames() {
             using (var conn = new NpgsqlConnection(_connectionString)) {
                 conn.Open();
 
@@ -100,7 +100,7 @@ namespace Server {
                 }
             }
         }
-        public Problem GetProblem(int problemId) {
+        private Problem GetProblem(int problemId) {
             using (var conn = new NpgsqlConnection(_connectionString)) {
                 conn.Open();
 
@@ -109,20 +109,22 @@ namespace Server {
                     cmd.Parameters.AddWithValue("id", problemId);
                     using (var reader = cmd.ExecuteReader()) {
                         reader.Read();
-                        // problem table: id , name, statement, input_format, output_format, notes, rating
+                        // problem table: id , name, statement, input_format, output_format, notes, rating, example_input, example_output
                         int id = reader.GetInt32(0);
                         string name = reader.GetString(1);
                         string statement = reader.GetString(2);
                         string input = reader.GetString(3);
                         string output = reader.GetString(4);
                         int rating = reader.GetInt32(6);
-                        return new Problem(id, name, statement, rating, input, output);
+                        string exampleInput = reader.GetString(7);
+                        string exampleOutput = reader.GetString(8);
+                        return new Problem(id, name, statement, rating, input, output, exampleInput, exampleOutput);
                     }
                 }
             }
         }
 
-        public async Task<string> SubmitSolution(Solution solution) {
+        private async Task<string> SubmitSolution(Solution solution) {
             Console.WriteLine(solution.Code);
             Problem problem = GetProblem(solution.ProblemId);
             List<Testcase> testcases = GetTestcases(problem.Id);
@@ -130,7 +132,7 @@ namespace Server {
             return verdict;
         }
 
-        public List<Testcase> GetTestcases(int problemId) {
+        private List<Testcase> GetTestcases(int problemId) {
             using (var conn = new NpgsqlConnection(_connectionString)) {
                 conn.Open();
 
@@ -150,7 +152,7 @@ namespace Server {
                 }
             }
         }
-        public Request ReceiveRequest(Socket socket) {
+        private Request ReceiveRequest(Socket socket) {
             byte[] buffer = new byte[CHUNK_SIZE];
             StringBuilder stringBuilder = new();
             while (true) {
@@ -166,7 +168,7 @@ namespace Server {
             Console.WriteLine($"Request: {jsonString}");
             return new Request(jsonString);
         }
-        public void SendResponse(Socket socket, Response response) {
+        private void SendResponse(Socket socket, Response response) {
             Console.WriteLine($"Response: {response.ToJsonString()}");
             Console.WriteLine();
             // Serialize the object to JSON and convert to bytes

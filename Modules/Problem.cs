@@ -14,6 +14,8 @@ namespace Modules
         public int Rating { get; }
         public string InputFormat { get; }
         public string OutputFormat { get; }
+        public string ExampleInput { get; }
+        public string ExampleOutput { get; }
 
         public Problem(
             int id,
@@ -21,7 +23,9 @@ namespace Modules
             string statement,
             int rating,
             string inputFormat,
-            string outputFormat
+            string outputFormat,
+            string exampleInput,
+            string exampleOutput
         )
         {
             Id = id;
@@ -30,6 +34,8 @@ namespace Modules
             Rating = rating;
             InputFormat = inputFormat;
             OutputFormat = outputFormat;
+            ExampleInput = exampleInput;
+            ExampleOutput = exampleOutput;
         }
     }
 }
