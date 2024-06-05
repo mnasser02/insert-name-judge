@@ -170,6 +170,7 @@ namespace Client
                 Example.Text = $"Input:\n{problem.ExampleInput}\n\nOutput:\n{problem.ExampleOutput}\n";
 
 
+
             }
         }
 
