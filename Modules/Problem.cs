@@ -17,8 +17,6 @@ namespace Modules
         public string ExampleInput { get; }
         public string ExampleOutput { get; }
 
-        public string ExampleOutput { get; }
-        public string ExampleInput { get; }
 
         public Problem(
             int id,
