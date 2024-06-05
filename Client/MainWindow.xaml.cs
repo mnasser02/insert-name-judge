@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -25,8 +26,10 @@ namespace Client
         //  private ProblemController problemController;
         // private TestCaseController testCaseController;
 
-        static bool Lock=false;
-           static IPAddress serverIp =IPAddress.Parse("192.168.137.18");
+       static IPHostEntry iPHostEntry = Dns.GetHostEntry("localhost");
+
+        static IPAddress serverIp = iPHostEntry.AddressList[0];
+        //static IPAddress serverIp =IPAddress.Parse("192.168.137.212");
 
           static  client client = new(serverIp);
         public MainWindow()
@@ -37,10 +40,14 @@ namespace Client
             Language.Items.Add("java");
             Language.Items.Add("py");
             Language.Items.Add("cpp");
-          
-          
+            Submit.Background = new SolidColorBrush(Colors.Transparent);
 
-            
+            Submit.MouseEnter += Submit_MouseEnter;
+            Submit.MouseLeave += Submit_MouseLeave;
+
+
+
+
             List<(int, string)> problems = client.GetProblemsIdsNames();
             foreach (var (id, name) in problems)
             {
@@ -51,29 +58,59 @@ namespace Client
                ProblemListBox.Items.Add(textblock);
             }
 
+
           
 
+
         }
-         
-            
+        private void Submit_MouseEnter(object sender, MouseEventArgs e)
+        {
+            // Create a ColorAnimation to change the background color to gray
+            var colorAnimation = new ColorAnimation
+            {
+                To = Colors.Gray,
+                Duration = new Duration(TimeSpan.FromSeconds(0.2))
+            };
 
-  
+            // Apply the animation to the background brush
+            var brush = (SolidColorBrush)Submit.Background;
+            brush.BeginAnimation(SolidColorBrush.ColorProperty, colorAnimation);
+        }
+
+        private void Submit_MouseLeave(object sender, MouseEventArgs e)
+        {
+            // Create a ColorAnimation to change the background color back to transparent
+            var colorAnimation = new ColorAnimation
+            {
+                To = Colors.Transparent,
+                Duration = new Duration(TimeSpan.FromSeconds(0.2))
+            };
+
+            // Apply the animation to the background brush
+            var brush = (SolidColorBrush)Submit.Background;
+            brush.BeginAnimation(SolidColorBrush.ColorProperty, colorAnimation);
+        }
 
 
 
-    
+
+
+
+
+
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            if (!Lock) {
-                Lock = false;
+            Submit.IsEnabled = false;
                     var selectedItem = (TextBlock)ProblemListBox.SelectedItem;
                     int id = int.Parse(selectedItem.Text.Split(' ')[0]);
                     Solution gg = new Solution(id, Language.SelectedItem.ToString(), Code.Text);
                     String verdict = client.SubmitSolution(gg);
+            if (verdict.StartsWith('A')) Verdict.Foreground = Brushes.Green;
+            else Verdict.Foreground = Brushes.Red;
                     Verdict.Text = verdict;
-                Lock = true;
-                }
+          
+            Submit.IsEnabled = true;
         }
 
         private void ProblemListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
@@ -82,6 +119,7 @@ namespace Client
             ListBox listBox = sender as ListBox;
             if (listBox != null && listBox.SelectedItem != null)
             {
+                Verdict.Text = "";
                 // Get the selected item
                 var selectedItem = (TextBlock)ProblemListBox.SelectedItem;
                 int id = int.Parse(selectedItem.Text.Split(' ')[0]);
