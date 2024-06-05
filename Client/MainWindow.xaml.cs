@@ -99,17 +99,28 @@ namespace Client
 
 
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
             Submit.IsEnabled = false;
-                    var selectedItem = (TextBlock)ProblemListBox.SelectedItem;
-                    int id = int.Parse(selectedItem.Text.Split(' ')[0]);
-                    Solution gg = new Solution(id, Language.SelectedItem.ToString(), Code.Text);
-                    String verdict = client.SubmitSolution(gg);
-            if (verdict.StartsWith('A')) Verdict.Foreground = Brushes.Green;
-            else Verdict.Foreground = Brushes.Red;
-                    Verdict.Text = verdict;
-          
+            
+            if (Language.SelectedItem == null)
+            {
+                Verdict.Text = "Please select a language";
+                Verdict.Foreground = Brushes.White;
+            }
+            else
+            {
+                Verdict.Text = "";
+                await Task.Delay(300);
+                var selectedItem = (TextBlock)ProblemListBox.SelectedItem;
+                int id = int.Parse(selectedItem.Text.Split(' ')[0]);
+                Solution gg = new Solution(id, Language.SelectedItem.ToString(), Code.Text);
+                String verdict = client.SubmitSolution(gg);
+                if (verdict.StartsWith("Acc")) Verdict.Foreground = Brushes.Green;
+                else Verdict.Foreground = Brushes.Red;
+                Verdict.Text = verdict;
+            }
+            await Task.Delay(2000);
             Submit.IsEnabled = true;
         }
 
@@ -130,6 +141,7 @@ namespace Client
                 Code.Visibility = Visibility.Visible;
                 Language.Visibility = Visibility.Visible;
                 Submit.Visibility = Visibility.Visible;
+                ProblemRatingBorder.Visibility = Visibility.Visible;
                
 
                 ProblemName.Text =""+ problem.Id + ". " + problem.Name;
